@@ -7,6 +7,12 @@
 
 import Foundation
 
+public protocol ThirdBusinessModelProtocol {
+    var someThirdBusinessProperty: String { get }
+}
+
+public protocol ThirdAnalyticsProtocol {}
+
 public protocol ThirdViewModelProtocol: BaseViewModelProtocol {
     var someViewModelProperty: String { get set }
     func getBusinessProperty() -> String

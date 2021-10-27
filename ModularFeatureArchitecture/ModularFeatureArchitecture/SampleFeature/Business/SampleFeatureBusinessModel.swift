@@ -7,8 +7,16 @@
 
 import Foundation
 
+public protocol SampleFeatureUseCaseProtocol: FirstBusinessModelProtocol, SecondBusinessModelProtocol, ThirdBusinessModelProtocol, FourthBusinessModelProtocol {
+    var repository: SampleFeatureRepositoryProtocol { get }
+}
+
 class SampleFeatureBusinessModel: SampleFeatureUseCaseProtocol {
     var repository: SampleFeatureRepositoryProtocol
+    
+    init(repository: SampleFeatureRepositoryProtocol) {
+        self.repository = repository
+    }
     
     public var someFirstBusinessProperty: String {
         return repository.getSomeFirstProperty()
@@ -21,17 +29,5 @@ class SampleFeatureBusinessModel: SampleFeatureUseCaseProtocol {
     }
     public var someFourthBusinessProperty: String{
         return repository.getSomeFourthProperty()
-    }
-    
-    init(repository: SampleFeatureRepositoryProtocol) {
-        self.repository = repository
-    }
-}
-
-
-
-extension SampleFeatureBusinessModel: SampleFeatureAnalyticsProtocol {
-    func onFirstContinueButtonClick() {
-        print("hahahaha")
     }
 }

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5983F8402729BBA2007CB6F5 /* SampleFeatureBusinessModel+Analytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5983F83F2729BBA2007CB6F5 /* SampleFeatureBusinessModel+Analytics.swift */; };
 		59ECB38527296FBD00BE57F5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59ECB38427296FBD00BE57F5 /* AppDelegate.swift */; };
 		59ECB38927296FBD00BE57F5 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59ECB38827296FBD00BE57F5 /* ViewController.swift */; };
 		59ECB38E27296FBF00BE57F5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 59ECB38D27296FBF00BE57F5 /* Assets.xcassets */; };
@@ -20,7 +21,6 @@
 		59ECB3FA272971A400BE57F5 /* SampleFeatureRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59ECB3F7272971A400BE57F5 /* SampleFeatureRepositoryProtocol.swift */; };
 		59ECB400272971AE00BE57F5 /* SampleFeatureViewControllerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59ECB3FD272971AE00BE57F5 /* SampleFeatureViewControllerFactory.swift */; };
 		59ECB401272971AE00BE57F5 /* SampleFeatureFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59ECB3FE272971AE00BE57F5 /* SampleFeatureFlow.swift */; };
-		59ECB407272971BC00BE57F5 /* BusinessModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59ECB405272971BC00BE57F5 /* BusinessModelProtocol.swift */; };
 		59ECB408272971BC00BE57F5 /* SampleFeatureBusinessModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59ECB406272971BC00BE57F5 /* SampleFeatureBusinessModel.swift */; };
 		59ECB40E272971CC00BE57F5 /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59ECB40C272971CB00BE57F5 /* FirstViewController.swift */; };
 		59ECB40F272971CC00BE57F5 /* FirstViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59ECB40D272971CC00BE57F5 /* FirstViewModel.swift */; };
@@ -48,6 +48,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5983F83F2729BBA2007CB6F5 /* SampleFeatureBusinessModel+Analytics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SampleFeatureBusinessModel+Analytics.swift"; sourceTree = "<group>"; };
 		59ECB38127296FBD00BE57F5 /* ModularFeatureArchitecture.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ModularFeatureArchitecture.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		59ECB38427296FBD00BE57F5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		59ECB38827296FBD00BE57F5 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -63,7 +64,6 @@
 		59ECB3F7272971A400BE57F5 /* SampleFeatureRepositoryProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SampleFeatureRepositoryProtocol.swift; sourceTree = "<group>"; };
 		59ECB3FD272971AE00BE57F5 /* SampleFeatureViewControllerFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SampleFeatureViewControllerFactory.swift; sourceTree = "<group>"; };
 		59ECB3FE272971AE00BE57F5 /* SampleFeatureFlow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SampleFeatureFlow.swift; sourceTree = "<group>"; };
-		59ECB405272971BC00BE57F5 /* BusinessModelProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BusinessModelProtocol.swift; sourceTree = "<group>"; };
 		59ECB406272971BC00BE57F5 /* SampleFeatureBusinessModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SampleFeatureBusinessModel.swift; sourceTree = "<group>"; };
 		59ECB40C272971CB00BE57F5 /* FirstViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
 		59ECB40D272971CC00BE57F5 /* FirstViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirstViewModel.swift; sourceTree = "<group>"; };
@@ -178,8 +178,8 @@
 			isa = PBXGroup;
 			children = (
 				59ECB40B272971BF00BE57F5 /* Data */,
-				59ECB405272971BC00BE57F5 /* BusinessModelProtocol.swift */,
 				59ECB406272971BC00BE57F5 /* SampleFeatureBusinessModel.swift */,
+				5983F83F2729BBA2007CB6F5 /* SampleFeatureBusinessModel+Analytics.swift */,
 			);
 			path = Business;
 			sourceTree = "<group>";
@@ -198,8 +198,8 @@
 		59ECB3ED2729715200BE57F5 /* First */ = {
 			isa = PBXGroup;
 			children = (
-				59ECB40C272971CB00BE57F5 /* FirstViewController.swift */,
 				59ECB40D272971CC00BE57F5 /* FirstViewModel.swift */,
+				59ECB40C272971CB00BE57F5 /* FirstViewController.swift */,
 			);
 			path = First;
 			sourceTree = "<group>";
@@ -207,8 +207,8 @@
 		59ECB3EE2729715800BE57F5 /* Second */ = {
 			isa = PBXGroup;
 			children = (
-				59ECB412272971D300BE57F5 /* SecondViewController.swift */,
 				59ECB413272971D300BE57F5 /* SecondViewModel.swift */,
+				59ECB412272971D300BE57F5 /* SecondViewController.swift */,
 			);
 			path = Second;
 			sourceTree = "<group>";
@@ -216,8 +216,8 @@
 		59ECB3EF2729716100BE57F5 /* Third */ = {
 			isa = PBXGroup;
 			children = (
-				59ECB418272971DC00BE57F5 /* ThirdViewController.swift */,
 				59ECB419272971DC00BE57F5 /* ThirdViewModel.swift */,
+				59ECB418272971DC00BE57F5 /* ThirdViewController.swift */,
 			);
 			path = Third;
 			sourceTree = "<group>";
@@ -225,8 +225,8 @@
 		59ECB3F02729716900BE57F5 /* Fourth */ = {
 			isa = PBXGroup;
 			children = (
-				59ECB41F272971E600BE57F5 /* FourthViewController.swift */,
 				59ECB41E272971E600BE57F5 /* FourthViewModel.swift */,
+				59ECB41F272971E600BE57F5 /* FourthViewController.swift */,
 			);
 			path = Fourth;
 			sourceTree = "<group>";
@@ -386,6 +386,7 @@
 				59ECB40E272971CC00BE57F5 /* FirstViewController.swift in Sources */,
 				59ECB414272971D300BE57F5 /* SecondViewController.swift in Sources */,
 				59ECB421272971E600BE57F5 /* FourthViewController.swift in Sources */,
+				5983F8402729BBA2007CB6F5 /* SampleFeatureBusinessModel+Analytics.swift in Sources */,
 				59ECB3F8272971A400BE57F5 /* SampleFeatureApiMock.swift in Sources */,
 				59ECB401272971AE00BE57F5 /* SampleFeatureFlow.swift in Sources */,
 				59ECB41A272971DC00BE57F5 /* ThirdViewController.swift in Sources */,
@@ -394,7 +395,6 @@
 				59ECB3F9272971A400BE57F5 /* SampleFeatureApi.swift in Sources */,
 				59ECB3F22729719500BE57F5 /* SampleFeatureLauncher.swift in Sources */,
 				59ECB408272971BC00BE57F5 /* SampleFeatureBusinessModel.swift in Sources */,
-				59ECB407272971BC00BE57F5 /* BusinessModelProtocol.swift in Sources */,
 				59ECB3C32729709300BE57F5 /* BaseViewControllerFactory.swift in Sources */,
 				59ECB415272971D300BE57F5 /* SecondViewModel.swift in Sources */,
 				59ECB38927296FBD00BE57F5 /* ViewController.swift in Sources */,
