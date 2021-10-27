@@ -18,6 +18,6 @@ class FirstViewModelTest: XCTestCase {
     func makeSUT() -> FirstViewModel {
         let businessModel = SampleFeatureBusinessModel(repository: SampleFeatureApiMock())
         
-        return FirstViewModel(businessModel: businessModel)
+        return FirstViewModel(useCase: businessModel, analytics: businessModel)
     }
 }

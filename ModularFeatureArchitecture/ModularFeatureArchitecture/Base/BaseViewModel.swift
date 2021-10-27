@@ -8,24 +8,34 @@
 import Foundation
 
 public protocol BaseViewModelProtocol {
-    func getBusinessModel<BusinessModel>() -> BusinessModel?
+    func getUseCase<UseCase>() -> UseCase?
+    func getAnalytics<AnalyticsModel>() -> AnalyticsModel?
 }
 
 public protocol ViewModelProtocol: BaseViewModelProtocol {
-    associatedtype BusinessModel
-    var businessModel: BusinessModel? { get }
+    associatedtype UseCase
+    associatedtype AnalyticsModel
+    var useCase: UseCase? { get }
+    var analytics: AnalyticsModel? { get }
 }
 
-open class BaseViewModel<B>: ViewModelProtocol {
-    public typealias BusinessModel = B
+open class BaseViewModel<U, A>: ViewModelProtocol {
+    public typealias UseCase = U
+    public typealias AnalyticsModel = A
     
-    public var businessModel: BusinessModel?
+    public var useCase: UseCase?
+    public var analytics: AnalyticsModel?
     
-    init(businessModel: BusinessModel?) {
-        self.businessModel = businessModel
+    init(useCase: UseCase?, analytics: AnalyticsModel?) {
+        self.useCase = useCase
+        self.analytics = analytics
     }
     
-    public func getBusinessModel<BusinessModel>() -> BusinessModel? {
-        return businessModel as? BusinessModel
+    public func getUseCase<UseCase>() -> UseCase? {
+        return useCase as? UseCase
+    }
+    
+    public func getAnalytics<AnalyticsModel>() -> AnalyticsModel? {
+        return analytics as? AnalyticsModel
     }
 }

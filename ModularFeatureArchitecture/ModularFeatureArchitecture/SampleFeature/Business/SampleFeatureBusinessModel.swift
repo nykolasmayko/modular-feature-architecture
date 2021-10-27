@@ -7,7 +7,7 @@
 
 import Foundation
 
-class SampleFeatureBusinessModel: SampleFeatureBusinessModelProtocol {
+class SampleFeatureBusinessModel: SampleFeatureUseCaseProtocol {
     var repository: SampleFeatureRepositoryProtocol
     
     public var someFirstBusinessProperty: String {
@@ -30,3 +30,8 @@ class SampleFeatureBusinessModel: SampleFeatureBusinessModelProtocol {
 
 
 
+extension SampleFeatureBusinessModel: SampleFeatureAnalyticsProtocol {
+    func onFirstContinueButtonClick() {
+        print("hahahaha")
+    }
+}

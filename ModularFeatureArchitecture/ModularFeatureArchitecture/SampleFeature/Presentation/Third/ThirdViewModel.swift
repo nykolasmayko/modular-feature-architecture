@@ -12,15 +12,15 @@ public protocol ThirdViewModelProtocol: BaseViewModelProtocol {
     func getBusinessProperty() -> String
 }
 
-class ThirdViewModel: BaseViewModel<ThirdBusinessModelProtocol>, ThirdViewModelProtocol {
+class ThirdViewModel: BaseViewModel<ThirdBusinessModelProtocol, ThirdAnalyticsProtocol>, ThirdViewModelProtocol {
     var someViewModelProperty: String
     
-    init(businessModel: ThirdBusinessModelProtocol?, someViewModelProperty: String) {
+    init(useCase: ThirdBusinessModelProtocol?, analytics: ThirdAnalyticsProtocol?, someViewModelProperty: String) {
         self.someViewModelProperty = someViewModelProperty
-        super.init(businessModel: businessModel)
+        super.init(useCase: useCase, analytics: analytics)
     }
     
     func getBusinessProperty() -> String {
-        return businessModel?.someThirdBusinessProperty ?? ""
+        return useCase?.someThirdBusinessProperty ?? ""
     }
 }

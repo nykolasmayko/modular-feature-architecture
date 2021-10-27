@@ -11,8 +11,8 @@ public protocol FouthViewModelProtocol: BaseViewModelProtocol {
     func getBusinessProperty() -> String
 }
 
-class FourthViewModel: BaseViewModel<FourthBusinessModelProtocol>, FouthViewModelProtocol {
+class FourthViewModel: BaseViewModel<FourthBusinessModelProtocol, FourthAnalyticsProtocol>, FouthViewModelProtocol {
     func getBusinessProperty() -> String {
-        return businessModel?.someFourthBusinessProperty ?? ""
+        return useCase?.someFourthBusinessProperty ?? ""
     }
 }

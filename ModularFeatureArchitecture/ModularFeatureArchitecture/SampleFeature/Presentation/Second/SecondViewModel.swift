@@ -11,8 +11,8 @@ public protocol SecondViewModelProtocol: BaseViewModelProtocol {
     func getBusinessProperty() -> String
 }
 
-class SecondViewModel: BaseViewModel<SecondBusinessModelProtocol>, SecondViewModelProtocol  {    
+class SecondViewModel: BaseViewModel<SecondBusinessModelProtocol, SecondAnalyticsProtocol>, SecondViewModelProtocol  {
     func getBusinessProperty() -> String {
-        return businessModel?.someSecondBusinessProperty ?? ""
+        return useCase?.someSecondBusinessProperty ?? ""
     }
 }

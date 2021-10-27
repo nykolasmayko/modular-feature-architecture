@@ -11,7 +11,7 @@ import UIKit
 public protocol SampleFeatureFlowProtocol {
     var factory: SampleFeatureViewControllerFactoryProtocol { get }
     var featureDelegate: SampleFeatureDelegate? { get set }
-    func start(businessModel: SampleFeatureBusinessModelProtocol) -> UIViewController
+    func start(useCase: FirstBusinessModelProtocol, analytics: FirstAnalyticsProtocol) -> UIViewController
 }
 
 class SampleFeatureFlow: SampleFeatureFlowProtocol {
@@ -23,8 +23,8 @@ class SampleFeatureFlow: SampleFeatureFlowProtocol {
         self.featureDelegate = featureDelegate
     }
     
-    func start(businessModel: SampleFeatureBusinessModelProtocol) -> UIViewController {
-        let firstViewModel = FirstViewModel(businessModel: businessModel)
+    func start(useCase: FirstBusinessModelProtocol, analytics: FirstAnalyticsProtocol) -> UIViewController {
+        let firstViewModel = FirstViewModel(useCase: useCase, analytics: analytics)
         let firstViewController = UIViewController.instantiateVC(ofType: FirstViewController.self)!
         firstViewController.viewModel = firstViewModel
         firstViewController.flowDelegate = self
@@ -37,13 +37,13 @@ class SampleFeatureFlow: SampleFeatureFlowProtocol {
 
 extension SampleFeatureFlow: FirstViewControllerFlowDelegate {
     func onFirstButtonClick(in controller: BaseViewController<FirstViewModelProtocol, FirstViewControllerFlowDelegate>) {
-        let nextVC = factory.createSecondViewController(from: controller.viewModel as? BaseViewModel<FirstBusinessModelProtocol>, and: self)
+        let nextVC = factory.createSecondViewController(from: controller.viewModel as? BaseViewModel<FirstBusinessModelProtocol, FirstAnalyticsProtocol>, and: self)
         controller.show(nextVC, sender: nil)
     }
     
     func onSecondButtonClick(in controller: BaseViewController<FirstViewModelProtocol, FirstViewControllerFlowDelegate>) {
         guard let someProperty = controller.viewModel?.getBusinessProperty() else { return }
-        let nextVC = factory.createThirdViewController(from: controller.viewModel as? BaseViewModel<FirstBusinessModelProtocol>, flowDelegate: self, someProperty: someProperty)
+        let nextVC = factory.createThirdViewController(from: controller.viewModel as? BaseViewModel<FirstBusinessModelProtocol, FirstAnalyticsProtocol>, flowDelegate: self, someProperty: someProperty)
         controller.show(nextVC, sender: nil)
     }
 }
@@ -52,7 +52,7 @@ extension SampleFeatureFlow: FirstViewControllerFlowDelegate {
 
 extension SampleFeatureFlow: SecondViewControllerFlowDelegate {
     func onFirstButtonClick(in controller: BaseViewController<SecondViewModelProtocol, SecondViewControllerFlowDelegate>) {
-        let nextVC = factory.createFourthViewController(from: controller.viewModel as? BaseViewModel<SecondBusinessModelProtocol>, and: self)
+        let nextVC = factory.createFourthViewController(from: controller.viewModel as? BaseViewModel<SecondBusinessModelProtocol, SecondAnalyticsProtocol>, and: self)
         controller.show(nextVC, sender: nil)
     }
 }
@@ -61,7 +61,7 @@ extension SampleFeatureFlow: SecondViewControllerFlowDelegate {
 
 extension SampleFeatureFlow: ThirdViewControllerFlowDelegate {
     func onDidLoadAfterTwoSeconds(in controller: BaseViewController<ThirdViewModelProtocol, ThirdViewControllerFlowDelegate>) {
-        let nextVC = factory.createFourthViewController(from: controller.viewModel as? BaseViewModel<ThirdBusinessModelProtocol>, and: self)
+        let nextVC = factory.createFourthViewController(from: controller.viewModel as? BaseViewModel<ThirdBusinessModelProtocol, ThirdAnalyticsProtocol>, and: self)
         controller.show(nextVC, sender: nil)
     }
 }

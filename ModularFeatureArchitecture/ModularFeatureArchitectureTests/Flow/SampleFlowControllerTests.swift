@@ -11,7 +11,7 @@ import XCTest
 class SampleFlowControllerTests: XCTestCase {
     func test_onFirstButtonClick_goToSecondViewController() throws {
         let flowController = makeSUT()
-        let viewModel = FirstViewModel(businessModel: businessModel)
+        let viewModel = FirstViewModel(useCase: businessModel, analytics: businessModel)
         let viewController = FirstViewController(viewModel: viewModel, flowDelegate: flowController)
         let _ = NonAnimatedNavigation(rootViewController: viewController)
         
@@ -22,7 +22,7 @@ class SampleFlowControllerTests: XCTestCase {
     
     func test_onFirstButtonClick_goToThirdViewController() throws {
         let flowController = makeSUT()
-        let viewModel = FirstViewModel(businessModel: businessModel)
+        let viewModel = FirstViewModel(useCase: businessModel, analytics: businessModel)
         let viewController = FirstViewController(viewModel: viewModel, flowDelegate: flowController)
         let _ = NonAnimatedNavigation(rootViewController: viewController)
         
@@ -33,7 +33,7 @@ class SampleFlowControllerTests: XCTestCase {
     
     func test_onSecondViewFirstButtonClick_goToFourthViewController() throws {
         let flowController = makeSUT()
-        let viewModel = SecondViewModel(businessModel: businessModel)
+        let viewModel = SecondViewModel(useCase: businessModel, analytics: businessModel)
         let viewController = SecondViewController(viewModel: viewModel, flowDelegate: flowController)
         let _ = NonAnimatedNavigation(rootViewController: viewController)
         
@@ -44,7 +44,7 @@ class SampleFlowControllerTests: XCTestCase {
     
     func test_onDidLoadAfterTwoSecondsThirdViewFlow_goToFourthViewController() throws {
         let flowController = makeSUT()
-        let viewModel = ThirdViewModel(businessModel: businessModel, someViewModelProperty: "hahahah")
+        let viewModel = ThirdViewModel(useCase: businessModel, analytics: businessModel, someViewModelProperty: "hahahah")
         let viewController = ThirdViewController(viewModel: viewModel, flowDelegate: flowController)
         let _ = NonAnimatedNavigation(rootViewController: viewController)
         
@@ -55,7 +55,7 @@ class SampleFlowControllerTests: XCTestCase {
     
     func test_onDidLoadAfterTwoSecondsFourthViewFlow_goToRootViewController() throws {
         let flowController = makeSUT()
-        let viewModel = FourthViewModel(businessModel: businessModel)
+        let viewModel = FourthViewModel(useCase: businessModel, analytics: businessModel)
         let viewController = FourthViewController(viewModel: viewModel, flowDelegate: flowController)
         let _ = NonAnimatedNavigation(rootViewController: viewController)
         

@@ -25,6 +25,7 @@ class FirstViewController: BaseViewController<FirstViewModelProtocol, FirstViewC
     }
     
     @IBAction func onFirstButtonClick(_ sender: Any) {
+        viewModel?.onContinueButtonClick()
         flowDelegate?.onFirstButtonClick(in: self)
     }
     

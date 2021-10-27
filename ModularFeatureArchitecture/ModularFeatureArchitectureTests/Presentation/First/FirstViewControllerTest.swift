@@ -26,16 +26,18 @@ class FirstViewControllerTest: XCTestCase {
     }
     
     class MockFirstViewModel: FirstViewModelProtocol {
+        func onContinueButtonClick() {}
+        
         func getBusinessProperty() -> String {
             return "One - Mock"
         }
         
-        func getBusinessModel<BusinessModel>() -> BusinessModel? {
-            return nil
+        func getUseCase<UseCase>() -> UseCase? {
+            nil
         }
         
-        func getFlow<FlowDelegate>() -> FlowDelegate? {
-            return nil
+        func getAnalytics<AnalyticsModel>() -> AnalyticsModel? {
+            nil
         }
     }
 }

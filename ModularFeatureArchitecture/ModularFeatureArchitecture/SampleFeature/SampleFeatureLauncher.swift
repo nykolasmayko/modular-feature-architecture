@@ -8,7 +8,7 @@
 import UIKit
 
 public protocol SampleFeatureLauncherProtocol {
-    var defaultBusinessModel: SampleFeatureBusinessModelProtocol { get }
+    var defaultBusinessModel: SampleFeatureUseCaseProtocol & SampleFeatureAnalyticsProtocol { get }
     var defaultFactory: SampleFeatureViewControllerFactoryProtocol { get }
     var mainFlow: SampleFeatureFlowProtocol { get }
     var isMockEnabled: Bool { get set }
@@ -19,10 +19,10 @@ public protocol SampleFeatureLauncherProtocol {
 }
 
 public enum SampleFeatureController {
-    case first(businessModel: FirstBusinessModelProtocol, flowDelegate: FirstViewControllerFlowDelegate)
-    case second(businessModel: SecondBusinessModelProtocol, flowDelegate: SecondViewControllerFlowDelegate)
-    case third(businessModel: ThirdBusinessModelProtocol, flowDelegate: ThirdViewControllerFlowDelegate, someProperty: String)
-    case fourth(businessModel: FourthBusinessModelProtocol, flowDelegate: FourthViewControllerFlowDelegate)
+    case first(useCase: FirstBusinessModelProtocol, analytics: FirstAnalyticsProtocol, flowDelegate: FirstViewControllerFlowDelegate)
+    case second(useCase: SecondBusinessModelProtocol, analytics: SecondAnalyticsProtocol, flowDelegate: SecondViewControllerFlowDelegate)
+    case third(useCase: ThirdBusinessModelProtocol, analytics: ThirdAnalyticsProtocol, flowDelegate: ThirdViewControllerFlowDelegate, someProperty: String)
+    case fourth(useCase: FourthBusinessModelProtocol, analytics: FourthAnalyticsProtocol, flowDelegate: FourthViewControllerFlowDelegate)
 }
 
 public protocol SampleFeatureDelegate: AnyObject {
@@ -30,7 +30,7 @@ public protocol SampleFeatureDelegate: AnyObject {
 }
 
 public class SampleFeatureLauncher: SampleFeatureLauncherProtocol {
-    public var defaultBusinessModel: SampleFeatureBusinessModelProtocol
+    public var defaultBusinessModel: SampleFeatureUseCaseProtocol & SampleFeatureAnalyticsProtocol
     public var defaultFactory: SampleFeatureViewControllerFactoryProtocol
     public var mainFlow: SampleFeatureFlowProtocol
     public var isMockEnabled: Bool {
@@ -49,7 +49,7 @@ public class SampleFeatureLauncher: SampleFeatureLauncherProtocol {
     public func start(delegate: SampleFeatureDelegate? = nil) -> UIViewController {
         mainFlow.featureDelegate = delegate
         
-        return mainFlow.start(businessModel: defaultBusinessModel)
+        return mainFlow.start(useCase: defaultBusinessModel, analytics: defaultBusinessModel)
     }
     
     public func start(with deeplink: String, delegate: SampleFeatureDelegate? = nil) -> UIViewController {
@@ -61,30 +61,30 @@ public class SampleFeatureLauncher: SampleFeatureLauncherProtocol {
     
     public func getViewController(_ controller: SampleFeatureController) -> UIViewController {
         switch controller {
-        case .first(let businessModel, let flowDelegate):
+        case .first(let businessModel, let analytics, let flowDelegate):
             let controller = UIViewController.instantiateVC(ofType: FirstViewController.self)!
-            controller.viewModel = FirstViewModel(businessModel: businessModel)
+            controller.viewModel = FirstViewModel(useCase: businessModel, analytics: analytics)
             controller.flowDelegate = flowDelegate
             
             return controller
             
-        case .second(let businessModel, let flowDelegate):
+        case .second(let businessModel, let analytics, let flowDelegate):
             let controller = UIViewController.instantiateVC(ofType: SecondViewController.self)!
-            controller.viewModel = SecondViewModel(businessModel: businessModel)
+            controller.viewModel = SecondViewModel(useCase: businessModel, analytics: analytics)
             controller.flowDelegate = flowDelegate
             
             return controller
             
-        case .third(let businessModel, let flowDelegate, let someProperty):
+        case .third(let businessModel, let analytics, let flowDelegate, let someProperty):
             let controller = UIViewController.instantiateVC(ofType: ThirdViewController.self)!
-            controller.viewModel = ThirdViewModel(businessModel: businessModel, someViewModelProperty: someProperty)
+            controller.viewModel = ThirdViewModel(useCase: businessModel, analytics: analytics, someViewModelProperty: someProperty)
             controller.flowDelegate = flowDelegate
 
             return controller
             
-        case.fourth(let businessModel, let flowDelegate):
+        case.fourth(let businessModel, let analytics, let flowDelegate):
             let controller = UIViewController.instantiateVC(ofType: FourthViewController.self)!
-            controller.viewModel = FourthViewModel(businessModel: businessModel)
+            controller.viewModel = FourthViewModel(useCase: businessModel, analytics: analytics)
             controller.flowDelegate = flowDelegate
 
             return controller
@@ -97,18 +97,18 @@ enum Deeplink: String {
     case goToSecond = "app://sample-feature/second"
     case goToThird = "app://sample-feature/third?someProperty=123421"
     
-    func getContoller(with businessModel: SampleFeatureBusinessModelProtocol, flowDelegate: SampleFeatureFlowProtocol) -> SampleFeatureController {
+    func getContoller(with businessModel: SampleFeatureUseCaseProtocol & SampleFeatureAnalyticsProtocol, flowDelegate: SampleFeatureFlowProtocol) -> SampleFeatureController {
         switch self {
         case .goToFirst:
-            return .first(businessModel: businessModel, flowDelegate: flowDelegate as! FirstViewControllerFlowDelegate)
+            return .first(useCase: businessModel, analytics: businessModel, flowDelegate: flowDelegate as! FirstViewControllerFlowDelegate)
 
         case .goToSecond:
-            return .second(businessModel: businessModel, flowDelegate: flowDelegate as! SecondViewControllerFlowDelegate)
+            return .second(useCase: businessModel, analytics: businessModel, flowDelegate: flowDelegate as! SecondViewControllerFlowDelegate)
 
         case .goToThird:
             let urlComponents = URLComponents(string: self.rawValue)
             let queryItem = urlComponents?.queryItems?.first?.value ?? ""
-            return .third(businessModel: businessModel, flowDelegate: flowDelegate as! ThirdViewControllerFlowDelegate, someProperty: queryItem)
+            return .third(useCase: businessModel, analytics: businessModel, flowDelegate: flowDelegate as! ThirdViewControllerFlowDelegate, someProperty: queryItem)
         }
     }
 }

@@ -8,19 +8,24 @@
 import UIKit
 
 open class BaseViewControllerFactory {
-    func getBusinessModel<B>(from viewModel: BaseViewModel<B>?) -> B? {
+    func getUseCaseAndAnalytics<U, A>(from viewModel: BaseViewModel<U, A>?) -> (useCase: U, analytics: A)? {
         guard let viewModel = viewModel else {
             assertionFailure("The viewModel property cannot be nil")
             return nil
         }
         
-        guard let businessModel: B = viewModel.getBusinessModel() else {
-            assertionFailure("The BusinessModel should implement the \(B.self)")
+        guard let useCase: U = viewModel.getUseCase() else {
+            assertionFailure("The BusinessModel should implement the \(U.self)")
             return nil
         }
         
-        return businessModel
-    }    
+        guard let analytics: A = viewModel.getAnalytics() else {
+            assertionFailure("The BusinessModel should implement the \(A.self)")
+            return nil
+        }
+        
+        return (useCase, analytics)
+    }
     
     func getViewControllerFromStoryboard<T: UIViewController>() -> T? {
         guard let viewController = UIViewController.instantiateVC(ofType: T.self) else {
