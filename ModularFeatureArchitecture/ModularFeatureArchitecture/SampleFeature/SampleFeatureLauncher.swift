@@ -17,6 +17,12 @@ public protocol SampleFeatureLauncherProtocol {
     func get(_ controller: SampleFeatureController) -> UIViewController
 }
 
+enum Deeplink: String {
+    case first = "app://sample-feature/first"
+    case second = "app://sample-feature/second"
+    case third = "app://sample-feature/third?someProperty=123421"
+}
+
 public enum SampleFeatureController {
     case first(useCase: FirstBusinessModelProtocol, analytics: FirstAnalyticsProtocol, flowDelegate: FirstViewControllerFlowDelegate)
     case second(useCase: SecondBusinessModelProtocol, analytics: SecondAnalyticsProtocol, flowDelegate: SecondViewControllerFlowDelegate)
@@ -82,10 +88,4 @@ public class SampleFeatureLauncher: SampleFeatureLauncherProtocol {
             return defaultFactory.createFourthViewController(useCase: businessModel, analytics: analytics, and: flowDelegate)
         }
     }
-}
-
-enum Deeplink: String {
-    case first = "app://sample-feature/first"
-    case second = "app://sample-feature/second"
-    case third = "app://sample-feature/third?someProperty=123421"
 }
