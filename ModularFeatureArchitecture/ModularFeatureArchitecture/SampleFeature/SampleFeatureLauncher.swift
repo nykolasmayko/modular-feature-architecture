@@ -11,11 +11,10 @@ public protocol SampleFeatureLauncherProtocol {
     var defaultBusinessModel: SampleFeatureUseCaseProtocol & SampleFeatureAnalyticsProtocol { get }
     var defaultFactory: SampleFeatureViewControllerFactoryProtocol { get }
     var mainFlow: SampleFeatureFlowProtocol { get }
-    var isMockEnabled: Bool { get set }
     
     func start(delegate: SampleFeatureDelegate?) -> UIViewController
     func start(with deeplink: String, delegate: SampleFeatureDelegate?) -> UIViewController
-    func getViewController(_ controller: SampleFeatureController) -> UIViewController
+    func get(_ controller: SampleFeatureController) -> UIViewController
 }
 
 public enum SampleFeatureController {
@@ -23,6 +22,21 @@ public enum SampleFeatureController {
     case second(useCase: SecondBusinessModelProtocol, analytics: SecondAnalyticsProtocol, flowDelegate: SecondViewControllerFlowDelegate)
     case third(useCase: ThirdBusinessModelProtocol, analytics: ThirdAnalyticsProtocol, flowDelegate: ThirdViewControllerFlowDelegate, someProperty: String)
     case fourth(useCase: FourthBusinessModelProtocol, analytics: FourthAnalyticsProtocol, flowDelegate: FourthViewControllerFlowDelegate)
+    
+    static func fromDeeplink(_ deeplink: Deeplink, with businessModel: SampleFeatureUseCaseProtocol & SampleFeatureAnalyticsProtocol, flowDelegate: SampleFeatureFlowProtocol) -> SampleFeatureController {
+        switch deeplink {
+        case .first:
+            return .first(useCase: businessModel, analytics: businessModel, flowDelegate: flowDelegate as! FirstViewControllerFlowDelegate)
+            
+        case .second:
+            return .second(useCase: businessModel, analytics: businessModel, flowDelegate: flowDelegate as! SecondViewControllerFlowDelegate)
+            
+        case .third:
+            let urlComponents = URLComponents(string: deeplink.rawValue)
+            let queryItem = urlComponents?.queryItems?.first?.value ?? ""
+            return .third(useCase: businessModel, analytics: businessModel, flowDelegate: flowDelegate as! ThirdViewControllerFlowDelegate, someProperty: queryItem)
+        }
+    }
 }
 
 public protocol SampleFeatureDelegate: AnyObject {
@@ -33,17 +47,11 @@ public class SampleFeatureLauncher: SampleFeatureLauncherProtocol {
     public var defaultBusinessModel: SampleFeatureUseCaseProtocol & SampleFeatureAnalyticsProtocol
     public var defaultFactory: SampleFeatureViewControllerFactoryProtocol
     public var mainFlow: SampleFeatureFlowProtocol
-    public var isMockEnabled: Bool {
-        didSet {
-            defaultBusinessModel = SampleFeatureBusinessModel(repository: isMockEnabled ? SampleFeatureApiMock() : SampleFeatureApi())
-        }
-    }
     
-    public init(isMockEnabled: Bool = false) {
-        self.defaultBusinessModel = SampleFeatureBusinessModel(repository: isMockEnabled ? SampleFeatureApiMock() : SampleFeatureApi())
+    public init(network: String, analytics: String, isMockEnabled: Bool = false) {
+        self.defaultBusinessModel = SampleFeatureBusinessModel(repository: isMockEnabled ? SampleFeatureApiMock() : SampleFeatureApi(network: network), analytics: analytics)
         self.defaultFactory = SampleFeatureViewControllerFactory()
         self.mainFlow = SampleFeatureFlow(factory: defaultFactory)
-        self.isMockEnabled = isMockEnabled
     }
     
     public func start(delegate: SampleFeatureDelegate? = nil) -> UIViewController {
@@ -56,59 +64,28 @@ public class SampleFeatureLauncher: SampleFeatureLauncherProtocol {
         guard let deeplink = Deeplink(rawValue: deeplink) else { return UIViewController() }
         mainFlow.featureDelegate = delegate
         
-        return getViewController(deeplink.getContoller(with: defaultBusinessModel, flowDelegate: mainFlow))
+        return get(SampleFeatureController.fromDeeplink(deeplink, with: defaultBusinessModel, flowDelegate: mainFlow))
     }
     
-    public func getViewController(_ controller: SampleFeatureController) -> UIViewController {
+    public func get(_ controller: SampleFeatureController) -> UIViewController {
         switch controller {
         case .first(let businessModel, let analytics, let flowDelegate):
-            let controller = UIViewController.instantiateVC(ofType: FirstViewController.self)!
-            controller.viewModel = FirstViewModel(useCase: businessModel, analytics: analytics)
-            controller.flowDelegate = flowDelegate
-            
-            return controller
+            return defaultFactory.createFirstViewController(useCase: businessModel, analytics: analytics, and: flowDelegate)
             
         case .second(let businessModel, let analytics, let flowDelegate):
-            let controller = UIViewController.instantiateVC(ofType: SecondViewController.self)!
-            controller.viewModel = SecondViewModel(useCase: businessModel, analytics: analytics)
-            controller.flowDelegate = flowDelegate
-            
-            return controller
+            return defaultFactory.createSecondViewController(useCase: businessModel, analytics: analytics, and: flowDelegate)
             
         case .third(let businessModel, let analytics, let flowDelegate, let someProperty):
-            let controller = UIViewController.instantiateVC(ofType: ThirdViewController.self)!
-            controller.viewModel = ThirdViewModel(useCase: businessModel, analytics: analytics, someViewModelProperty: someProperty)
-            controller.flowDelegate = flowDelegate
-
-            return controller
+            return defaultFactory.createThirdViewController(useCase: businessModel, analytics: analytics, flowDelegate: flowDelegate, and: someProperty)
             
         case.fourth(let businessModel, let analytics, let flowDelegate):
-            let controller = UIViewController.instantiateVC(ofType: FourthViewController.self)!
-            controller.viewModel = FourthViewModel(useCase: businessModel, analytics: analytics)
-            controller.flowDelegate = flowDelegate
-
-            return controller
+            return defaultFactory.createFourthViewController(useCase: businessModel, analytics: analytics, and: flowDelegate)
         }
     }
 }
 
 enum Deeplink: String {
-    case goToFirst = "app://sample-feature/first"
-    case goToSecond = "app://sample-feature/second"
-    case goToThird = "app://sample-feature/third?someProperty=123421"
-    
-    func getContoller(with businessModel: SampleFeatureUseCaseProtocol & SampleFeatureAnalyticsProtocol, flowDelegate: SampleFeatureFlowProtocol) -> SampleFeatureController {
-        switch self {
-        case .goToFirst:
-            return .first(useCase: businessModel, analytics: businessModel, flowDelegate: flowDelegate as! FirstViewControllerFlowDelegate)
-
-        case .goToSecond:
-            return .second(useCase: businessModel, analytics: businessModel, flowDelegate: flowDelegate as! SecondViewControllerFlowDelegate)
-
-        case .goToThird:
-            let urlComponents = URLComponents(string: self.rawValue)
-            let queryItem = urlComponents?.queryItems?.first?.value ?? ""
-            return .third(useCase: businessModel, analytics: businessModel, flowDelegate: flowDelegate as! ThirdViewControllerFlowDelegate, someProperty: queryItem)
-        }
-    }
+    case first = "app://sample-feature/first"
+    case second = "app://sample-feature/second"
+    case third = "app://sample-feature/third?someProperty=123421"
 }

@@ -13,9 +13,11 @@ public protocol SampleFeatureUseCaseProtocol: FirstBusinessModelProtocol, Second
 
 class SampleFeatureBusinessModel: SampleFeatureUseCaseProtocol {
     var repository: SampleFeatureRepositoryProtocol
+    var analytics: String
     
-    init(repository: SampleFeatureRepositoryProtocol) {
+    init(repository: SampleFeatureRepositoryProtocol, analytics: String) {
         self.repository = repository
+        self.analytics = analytics
     }
     
     public var someFirstBusinessProperty: String {

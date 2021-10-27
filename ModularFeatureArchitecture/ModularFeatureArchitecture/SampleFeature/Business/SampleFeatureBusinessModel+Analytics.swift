@@ -7,10 +7,12 @@
 
 import Foundation
 
-public protocol SampleFeatureAnalyticsProtocol: FirstAnalyticsProtocol, SecondAnalyticsProtocol, ThirdAnalyticsProtocol, FourthAnalyticsProtocol {}
+public protocol SampleFeatureAnalyticsProtocol: FirstAnalyticsProtocol, SecondAnalyticsProtocol, ThirdAnalyticsProtocol, FourthAnalyticsProtocol {
+    var analytics: String { get }
+}
 
 extension SampleFeatureBusinessModel: SampleFeatureAnalyticsProtocol {
     func onFirstContinueButtonClick() {
-        print("Needs to call the Technical Analytis Module")
+        print("Needs to call the Technical Analytis Module (analytics.track())")
     }
 }

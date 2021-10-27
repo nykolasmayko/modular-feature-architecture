@@ -15,9 +15,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SampleFeatureDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         let navigationController = UINavigationController()
         
-        let sampleFeatureLauncher = SampleFeatureLauncher()
+        let sampleFeatureLauncher = SampleFeatureLauncher(network: "Passar aqui o módulo estrutural de Networking", analytics: "Passar aqui o módulo estrutural de Analytics")
         
-//        navigationController.pushViewController(sampleFeatureLauncher.getViewController(.third(businessModel: AnotherSampleFeatureBusinessModel(), flowDelegate: AnotherSampleFlow(), someProperty: "Nykolas")), animated: true)
+//        navigationController.pushViewController(sampleFeatureLauncher.get(.third(useCase: AnotherSampleFeatureBusinessModel(), analytics: AnotherSampleFeatureBusinessModel(), flowDelegate: AnotherSampleFlow(), someProperty: "Nykolas")), animated: true)
         
         navigationController.pushViewController(sampleFeatureLauncher.start(delegate: self), animated: true)
         
@@ -37,7 +37,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SampleFeatureDelegate {
     }
 }
 
-class AnotherSampleFeatureBusinessModel: ThirdBusinessModelProtocol {
+class AnotherSampleFeatureBusinessModel: ThirdBusinessModelProtocol, ThirdAnalyticsProtocol {
     var someThirdBusinessProperty: String = "three"
     
     var someSecondBusinessProperty: String = "two"

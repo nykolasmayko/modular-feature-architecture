@@ -8,6 +8,12 @@
 import Foundation
 
 class SampleFeatureApi: SampleFeatureRepositoryProtocol {
+    let network: String
+    
+    init(network: String) {
+        self.network = network
+    }
+    
     func getSomeFirstProperty() -> String {
         return "One"
     }
