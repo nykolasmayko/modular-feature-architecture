@@ -66,7 +66,7 @@ class SampleFlowControllerTests: XCTestCase {
     
     // MARK: Helpers
     
-    let businessModel = SampleFeatureBusinessModel(repository: SampleFeatureApiMock())
+    let businessModel = SampleFeatureBusinessModel(repository: SampleFeatureApiMock(), analytics: "Adicionar Mock do Módulo Estruturante de Analytics")
     let controllerFactory = SampleFeatureViewControllerFactory()
     
     func makeSUT() -> SampleFeatureFlow {

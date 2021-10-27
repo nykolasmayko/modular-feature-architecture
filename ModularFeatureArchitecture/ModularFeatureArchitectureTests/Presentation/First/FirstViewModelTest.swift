@@ -16,7 +16,7 @@ class FirstViewModelTest: XCTestCase {
     // MARK: Helpers
     
     func makeSUT() -> FirstViewModel {
-        let businessModel = SampleFeatureBusinessModel(repository: SampleFeatureApiMock())
+        let businessModel = SampleFeatureBusinessModel(repository: SampleFeatureApiMock(), analytics: "Adicionar Mock do Módulo Estruturante de Analytics")
         
         return FirstViewModel(useCase: businessModel, analytics: businessModel)
     }

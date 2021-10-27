@@ -29,6 +29,6 @@ class BusinessModelTest: XCTestCase {
     // MARK: Helpers
     
     func makeSUT() -> SampleFeatureBusinessModel {
-        return SampleFeatureBusinessModel(repository: SampleFeatureApiMock())
+        return SampleFeatureBusinessModel(repository: SampleFeatureApiMock(), analytics: "Adicionar Mock do Módulo Estruturante de Analytics")
     }
 }
