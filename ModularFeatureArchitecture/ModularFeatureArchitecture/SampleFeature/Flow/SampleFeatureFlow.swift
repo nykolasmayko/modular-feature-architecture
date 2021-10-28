@@ -11,7 +11,8 @@ import UIKit
 public protocol SampleFeatureFlowProtocol {
     var factory: SampleFeatureViewControllerFactoryProtocol { get }
     var featureDelegate: SampleFeatureDelegate? { get set }
-    func start(useCase: FirstBusinessModelProtocol, analytics: FirstAnalyticsProtocol) -> UIViewController
+    func start(useCase: SampleFeatureUseCaseProtocol, analytics: SampleFeatureAnalyticsProtocol) -> UIViewController
+    func show(_ destinationViewController: UIViewController, from currentViewController: UIViewController, sender: Any?)
 }
 
 class SampleFeatureFlow: SampleFeatureFlowProtocol {
@@ -23,13 +24,12 @@ class SampleFeatureFlow: SampleFeatureFlowProtocol {
         self.featureDelegate = featureDelegate
     }
     
-    func start(useCase: FirstBusinessModelProtocol, analytics: FirstAnalyticsProtocol) -> UIViewController {
-        let firstViewModel = FirstViewModel(useCase: useCase, analytics: analytics)
-        let firstViewController = UIViewController.instantiateVC(ofType: FirstViewController.self)!
-        firstViewController.viewModel = firstViewModel
-        firstViewController.flowDelegate = self
-        
-        return firstViewController
+    func start(useCase: SampleFeatureUseCaseProtocol, analytics: SampleFeatureAnalyticsProtocol) -> UIViewController {
+        return factory.createFirstViewController(useCase: useCase, analytics: analytics, and: self)
+    }
+    
+    func show(_ destinationViewController: UIViewController, from currentViewController: UIViewController, sender: Any? = nil) {
+        currentViewController.show(destinationViewController, sender: sender)
     }
 }
 
@@ -43,7 +43,7 @@ extension SampleFeatureFlow: FirstViewControllerFlowDelegate {
         let analytics: SecondAnalyticsProtocol? = viewModel.getAnalytics()
         
         let nextVC = factory.createSecondViewController(useCase: useCase, analytics: analytics, and: self)
-        controller.show(nextVC, sender: nil)
+        show(nextVC, from: controller)
     }
     
     func onSecondButtonClick(in controller: BaseViewController<FirstViewModelProtocol, FirstViewControllerFlowDelegate>) {
@@ -53,7 +53,7 @@ extension SampleFeatureFlow: FirstViewControllerFlowDelegate {
         let analytics: ThirdAnalyticsProtocol? = viewModel.getAnalytics()
         
         let nextVC = factory.createThirdViewController(useCase: useCase, analytics: analytics, flowDelegate: self, and: viewModel.getBusinessProperty())
-        controller.show(nextVC, sender: nil)
+        show(nextVC, from: controller)
     }
 }
 
@@ -67,7 +67,7 @@ extension SampleFeatureFlow: SecondViewControllerFlowDelegate {
         let analytics: FourthAnalyticsProtocol? = viewModel.getAnalytics()
         
         let nextVC = factory.createFourthViewController(useCase: useCase, analytics: analytics, and: self)
-        controller.show(nextVC, sender: nil)
+        show(nextVC, from: controller)
     }
 }
 
@@ -81,7 +81,7 @@ extension SampleFeatureFlow: ThirdViewControllerFlowDelegate {
         let analytics: FourthAnalyticsProtocol? = viewModel.getAnalytics()
         
         let nextVC = factory.createFourthViewController(useCase: useCase, analytics: analytics, and: self)
-        controller.show(nextVC, sender: nil)
+        show(nextVC, from: controller)
     }
 }
 
