@@ -76,16 +76,16 @@ public class SampleFeatureLauncher: SampleFeatureLauncherProtocol {
     public func get(_ controller: SampleFeatureController) -> UIViewController {
         switch controller {
         case .first(let businessModel, let analytics, let flowDelegate):
-            return factory.createFirstViewController(useCase: businessModel, analytics: analytics, and: flowDelegate)
+            return factory.makeFirstViewController(useCase: businessModel, analytics: analytics, and: flowDelegate)
             
         case .second(let businessModel, let analytics, let flowDelegate):
-            return factory.createSecondViewController(useCase: businessModel, analytics: analytics, and: flowDelegate)
+            return factory.makeSecondViewController(useCase: businessModel, analytics: analytics, and: flowDelegate)
             
         case .third(let businessModel, let analytics, let flowDelegate, let someProperty):
-            return factory.createThirdViewController(useCase: businessModel, analytics: analytics, flowDelegate: flowDelegate, and: someProperty)
+            return factory.makeThirdViewController(useCase: businessModel, analytics: analytics, flowDelegate: flowDelegate, and: someProperty)
             
         case.fourth(let businessModel, let analytics, let flowDelegate):
-            return factory.createFourthViewController(useCase: businessModel, analytics: analytics, and: flowDelegate)
+            return factory.makeFourthViewController(useCase: businessModel, analytics: analytics, and: flowDelegate)
         }
     }
 }

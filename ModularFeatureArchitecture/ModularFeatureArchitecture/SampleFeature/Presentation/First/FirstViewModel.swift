@@ -12,7 +12,7 @@ public protocol FirstBusinessModelProtocol {
 }
 
 public protocol FirstAnalyticsProtocol {
-    func onFirstContinueButtonClick()
+    func onFirstViewContinueButtonClick()
 }
 
 public protocol FirstViewModelProtocol: BaseViewModelProtocol {
@@ -22,7 +22,7 @@ public protocol FirstViewModelProtocol: BaseViewModelProtocol {
 
 class FirstViewModel: BaseViewModel<FirstBusinessModelProtocol, FirstAnalyticsProtocol>, FirstViewModelProtocol {
     func onContinueButtonClick() {
-        analytics?.onFirstContinueButtonClick()
+        analytics?.onFirstViewContinueButtonClick()
     }
     
     func getBusinessProperty() -> String {

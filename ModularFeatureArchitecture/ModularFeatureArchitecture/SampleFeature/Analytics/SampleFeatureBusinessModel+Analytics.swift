@@ -12,7 +12,7 @@ public protocol SampleFeatureAnalyticsProtocol: FirstAnalyticsProtocol, SecondAn
 }
 
 extension SampleFeatureBusinessModel: SampleFeatureAnalyticsProtocol {
-    func onFirstContinueButtonClick() {
-        print("Needs to call the Technical Analytis Module (analytics.track())")
+    func onFirstViewContinueButtonClick() {
+        print("Needs to call the Technical Analytics Module (i.e. analytics.track())")
     }
 }

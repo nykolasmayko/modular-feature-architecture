@@ -100,6 +100,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		59DDED7C273006DB00D3EFFB /* Analytics */ = {
+			isa = PBXGroup;
+			children = (
+				5983F83F2729BBA2007CB6F5 /* SampleFeatureBusinessModel+Analytics.swift */,
+			);
+			path = Analytics;
+			sourceTree = "<group>";
+		};
 		59ECB37827296FBD00BE57F5 = {
 			isa = PBXGroup;
 			children = (
@@ -147,6 +155,7 @@
 			isa = PBXGroup;
 			children = (
 				59ECB3F12729719500BE57F5 /* SampleFeatureLauncher.swift */,
+				59DDED7C273006DB00D3EFFB /* Analytics */,
 				59ECB3E92729712200BE57F5 /* Repository */,
 				59ECB3EA2729712B00BE57F5 /* Flow */,
 				59ECB3EB2729713500BE57F5 /* Business */,
@@ -179,7 +188,6 @@
 			children = (
 				59ECB40B272971BF00BE57F5 /* Data */,
 				59ECB406272971BC00BE57F5 /* SampleFeatureBusinessModel.swift */,
-				5983F83F2729BBA2007CB6F5 /* SampleFeatureBusinessModel+Analytics.swift */,
 			);
 			path = Business;
 			sourceTree = "<group>";

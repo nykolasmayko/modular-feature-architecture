@@ -17,12 +17,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SampleFeatureDelegate {
         
         let sampleFeatureLauncher = SampleFeatureLauncher(network: "Passar aqui o módulo estrutural de Networking", analytics: "Passar aqui o módulo estrutural de Analytics")
         
+        navigationController.pushViewController(sampleFeatureLauncher.start(delegate: self), animated: true)
+        
+//        navigationController.pushViewController(sampleFeatureLauncher.start(deeplink: "app://sample-feature/second", delegate: self), animated: true)
+        
 //        navigationController.pushViewController(sampleFeatureLauncher.get(.third(useCase: AnotherSampleFeatureBusinessModel(), analytics: AnotherSampleFeatureBusinessModel(), flowDelegate: AnotherSampleFlow(), someProperty: "Nykolas")), animated: true)
-        
-//        navigationController.pushViewController(sampleFeatureLauncher.start(delegate: self), animated: true)
-        
-        navigationController.pushViewController(sampleFeatureLauncher.start(deeplink: "app://sample-feature/second", delegate: self), animated: true)
-//        navigationController.setViewControllers(sampleFeatureLauncher.start(deeplink: "app://sample-feature/second", delegate: self), animated: true)
         
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.rootViewController = navigationController
